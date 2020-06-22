@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wordbook.dao.WordDao">
+
+    <select id="queryByUidAndPageAndLimit" resultType="com.wordbook.entity.Word">
+        select *
+        from word
+        where uid = #{uid}
+        limit #{page.start},#{page.limit}
+    </select>
+
+    <select id="queryCountByUid" resultType="int">
+        select count(*)
+        from word
+        where uid = #{id}
+    </select>
+
+    <delete id="del">
+        delete
+        from word
+        where id = #{id}
+          and uid = #{uid}
+    </delete>
+
+    <insert id="insert">
+        insert into word
+        values (null, #{uid}, #{word}, #{pronunciation}, #{chinese_translation})
+    </insert>
+
+    <update id="update">
+        update word
+        <set>
+            <if test="word != null and word != '' ">
+                word = #{word},
+            </if>
+            <if test="pronunciation != null and pronunciation != '' ">
+                pronunciation = #{pronunciation},
+            </if>
+            <if test="chinese_translation != null and chinese_translation != '' ">
+                chinese_translation = #{chinese_translation},
+            </if>
+        </set>
+        where id = #{id} and uid = #{uid}
+    </update>
+
+
+</mapper>

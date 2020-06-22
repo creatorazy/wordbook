@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wordbook.dao.UserDao">
+
+    <select id="loginByPassword" resultType="com.wordbook.entity.User">
+        select id,name,img
+        from user
+        where name = #{name}
+          and password = #{password}
+    </select>
+
+    <insert id="insert">
+        insert into user values (null,#{name},#{password},#{tel},#{img});
+    </insert>
+
+    <update id="update">
+        update user
+        <set>
+            <if test="name != null and name != '' ">
+                name = #{name},
+            </if>
+            <if test="password != null and password != '' ">
+                password = #{password},
+            </if>
+            <if test="tel != null and tel != '' ">
+                tel = #{tel},
+            </if>
+            <if test="img != null and img != '' ">
+                tel = #{img},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
